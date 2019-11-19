@@ -196,10 +196,15 @@ export default class extends Component {
     const isDownload = onBeforeComplete ? onBeforeComplete({ status: 'before-complete', canvas }) : true;
 
     if (isDownload) {
-      downloadImage(() => {
-        this.props.onComplete({ status: 'success', canvas });
+      if (bypassDownload) {
+        this.props.onComplete({ status: 'success', canvas, operations });
         this.props.onClose();
-      });
+      } else {
+        downloadImage(() => {
+          this.props.onComplete({ status: 'success', canvas });
+          this.props.onClose();
+        });
+      }
     } else {
       this.props.onComplete({ status: 'success', canvas });
       this.props.onClose();
