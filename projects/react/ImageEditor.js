@@ -30,7 +30,7 @@ export default class extends Component {
 
     const {
       processWithCloudimage, processWithFilerobot, uploadWithCloudimageLink, reduceBeforeEdit, cropBeforeEdit,
-      watermark
+      watermark, bypassDownload
     } = props.config;
 
     this.state = {
@@ -38,6 +38,7 @@ export default class extends Component {
       isHideCanvas: false,
       activeTab: null,
       activeBody: null,
+      bypassDownload: bypassDownload,
       currentOperation: null,
       original: { width: 300, height: 200 },
       cropDetails: { width: 300, height: 200 },
@@ -189,7 +190,7 @@ export default class extends Component {
 
   onDownloadImage = () => {
     const { onBeforeComplete } = this.props;
-    const { downloadImage, initialZoom } = this.state;
+    const { downloadImage, initialZoom, bypassDownload, operationsOriginal: operations  } = this.state;
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = getCanvasNode(canvasID);
     const isDownload = onBeforeComplete ? onBeforeComplete({ status: 'before-complete', canvas }) : true;
