@@ -190,14 +190,14 @@ export default class extends Component {
 
   onDownloadImage = () => {
     const { onBeforeComplete } = this.props;
-    const { downloadImage, initialZoom, bypassDownload, operationsOriginal: operations  } = this.state;
+    const { downloadImage, initialZoom, bypassDownload, operations, operationsOriginal  } = this.state;
     const canvasID = initialZoom !== 1 ? 'scaleflex-image-edit-box-original' : 'scaleflex-image-edit-box';
     const canvas = getCanvasNode(canvasID);
     const isDownload = onBeforeComplete ? onBeforeComplete({ status: 'before-complete', canvas }) : true;
 
     if (isDownload) {
       if (bypassDownload) {
-        this.props.onComplete({ status: 'success', canvas, operations });
+        this.props.onComplete({ status: 'success', canvas, operations, operationsOriginal });
         this.props.onClose();
       } else {
         downloadImage(() => {
